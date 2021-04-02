@@ -1,5 +1,5 @@
 function Get-PulseAudioCards {
-    pactl list short cards
+    pactl list cards
 }
 
 Export-ModuleMember -Function Get-PulseAudioCards

@@ -1,0 +1,167 @@
+Card #0
+	Name: alsa_card.usb-FiiO_DigiHug_USB_Audio-01
+	Driver: module-alsa-card.c
+	Owner Module: 23
+	Properties:
+		alsa.card = "1"
+		alsa.card_name = "DigiHug USB Audio"
+		alsa.long_card_name = "FiiO DigiHug USB Audio at usb-0000:2a:00.1-1, full speed"
+		alsa.driver_name = "snd_usb_audio"
+		device.bus_path = "pci-0000:2a:00.1-usb-0:1:1.1"
+		sysfs.path = "/devices/pci0000:00/0000:00:01.2/0000:20:00.0/0000:21:08.0/0000:2a:00.1/usb1/1-1/1-1:1.1/sound/card1"
+		udev.id = "usb-FiiO_DigiHug_USB_Audio-01"
+		device.bus = "usb"
+		device.vendor.id = "1852"
+		device.vendor.name = "GYROCOM C&C Co., LTD"
+		device.product.id = "7022"
+		device.product.name = "Fiio E10"
+		device.serial = "FiiO_DigiHug_USB_Audio"
+		device.string = "1"
+		device.description = "Fiio E10"
+		module-udev-detect.discovered = "1"
+		device.icon_name = "audio-card-usb"
+	Profiles:
+		input:analog-stereo: Analog Stereo Input (sinks: 0, sources: 1, priority: 65, available: yes)
+		input:iec958-stereo: Digital Stereo (IEC958) Input (sinks: 0, sources: 1, priority: 55, available: yes)
+		output:analog-stereo: Analog Stereo Output (sinks: 1, sources: 0, priority: 6500, available: yes)
+		output:analog-stereo+input:analog-stereo: Analog Stereo Duplex (sinks: 1, sources: 1, priority: 6565, available: yes)
+		output:analog-stereo+input:iec958-stereo: Analog Stereo Output + Digital Stereo (IEC958) Input (sinks: 1, sources: 1, priority: 6555, available: yes)
+		output:iec958-stereo: Digital Stereo (IEC958) Output (sinks: 1, sources: 0, priority: 5500, available: yes)
+		output:iec958-stereo+input:analog-stereo: Digital Stereo (IEC958) Output + Analog Stereo Input (sinks: 1, sources: 1, priority: 5565, available: yes)
+		output:iec958-stereo+input:iec958-stereo: Digital Stereo Duplex (IEC958) (sinks: 1, sources: 1, priority: 5555, available: yes)
+		off: Off (sinks: 0, sources: 0, priority: 0, available: yes)
+	Active Profile: output:iec958-stereo
+	Ports:
+		analog-input: Analog Input (type: Analog, priority: 10000, latency offset: 0 usec)
+			Part of profile(s): input:analog-stereo, output:analog-stereo+input:analog-stereo, output:iec958-stereo+input:analog-stereo
+		iec958-stereo-input: Digital Input (S/PDIF) (type: SPDIF, priority: 0, latency offset: 0 usec)
+			Part of profile(s): input:iec958-stereo, output:analog-stereo+input:iec958-stereo, output:iec958-stereo+input:iec958-stereo
+		analog-output: Analog Output (type: Analog, priority: 9900, latency offset: 0 usec)
+			Part of profile(s): output:analog-stereo, output:analog-stereo+input:analog-stereo, output:analog-stereo+input:iec958-stereo
+		iec958-stereo-output: Digital Output (S/PDIF) (type: SPDIF, priority: 0, latency offset: 0 usec)
+			Part of profile(s): output:iec958-stereo, output:iec958-stereo+input:analog-stereo, output:iec958-stereo+input:iec958-stereo
+
+Card #1
+	Name: alsa_card.usb-C-Media_Electronics_Inc._USB_Audio_Device-00
+	Driver: module-alsa-card.c
+	Owner Module: 24
+	Properties:
+		alsa.card = "4"
+		alsa.card_name = "USB Audio Device"
+		alsa.long_card_name = "C-Media Electronics Inc. USB Audio Device at usb-0000:2a:00.1-2, full speed"
+		alsa.driver_name = "snd_usb_audio"
+		device.bus_path = "pci-0000:2a:00.1-usb-0:2:1.0"
+		sysfs.path = "/devices/pci0000:00/0000:00:01.2/0000:20:00.0/0000:21:08.0/0000:2a:00.1/usb1/1-2/1-2:1.0/sound/card4"
+		udev.id = "usb-C-Media_Electronics_Inc._USB_Audio_Device-00"
+		device.bus = "usb"
+		device.vendor.id = "0d8c"
+		device.vendor.name = "C-Media Electronics, Inc."
+		device.product.id = "0014"
+		device.product.name = "Audio Adapter (Unitek Y-247A)"
+		device.serial = "C-Media_Electronics_Inc._USB_Audio_Device"
+		device.string = "4"
+		device.description = "Audio Adapter (Unitek Y-247A)"
+		module-udev-detect.discovered = "1"
+		device.icon_name = "audio-card-usb"
+	Profiles:
+		input:mono-fallback: Mono Input (sinks: 0, sources: 1, priority: 1, available: yes)
+		input:multichannel-input: Multichannel Input (sinks: 0, sources: 1, priority: 1, available: yes)
+		output:analog-stereo: Analog Stereo Output (sinks: 1, sources: 0, priority: 6500, available: yes)
+		output:analog-stereo+input:mono-fallback: Analog Stereo Output + Mono Input (sinks: 1, sources: 1, priority: 6501, available: yes)
+		output:analog-stereo+input:multichannel-input: Analog Stereo Output + Multichannel Input (sinks: 1, sources: 1, priority: 6501, available: yes)
+		output:iec958-stereo: Digital Stereo (IEC958) Output (sinks: 1, sources: 0, priority: 5500, available: yes)
+		output:iec958-stereo+input:mono-fallback: Digital Stereo (IEC958) Output + Mono Input (sinks: 1, sources: 1, priority: 5501, available: yes)
+		output:iec958-stereo+input:multichannel-input: Digital Stereo (IEC958) Output + Multichannel Input (sinks: 1, sources: 1, priority: 5501, available: yes)
+		off: Off (sinks: 0, sources: 0, priority: 0, available: yes)
+	Active Profile: input:mono-fallback
+	Ports:
+		analog-input-mic: Microphone (type: Mic, priority: 8700, latency offset: 0 usec)
+			Properties:
+				device.icon_name = "audio-input-microphone"
+			Part of profile(s): input:mono-fallback, output:analog-stereo+input:mono-fallback, output:iec958-stereo+input:mono-fallback
+		multichannel-input: Multichannel Input (type: Line, priority: 0, latency offset: 0 usec)
+			Part of profile(s): input:multichannel-input, output:analog-stereo+input:multichannel-input, output:iec958-stereo+input:multichannel-input
+		analog-output-speaker: Speakers (type: Speaker, priority: 10000, latency offset: 0 usec)
+			Properties:
+				device.icon_name = "audio-speakers"
+			Part of profile(s): output:analog-stereo, output:analog-stereo+input:mono-fallback, output:analog-stereo+input:multichannel-input
+		iec958-stereo-output: Digital Output (S/PDIF) (type: SPDIF, priority: 0, latency offset: 0 usec)
+			Part of profile(s): output:iec958-stereo, output:iec958-stereo+input:mono-fallback, output:iec958-stereo+input:multichannel-input
+
+Card #2
+	Name: alsa_card.pci-0000_2d_00.1
+	Driver: module-alsa-card.c
+	Owner Module: 25
+	Properties:
+		alsa.card = "0"
+		alsa.card_name = "HDA NVidia"
+		alsa.long_card_name = "HDA NVidia at 0xf7080000 irq 105"
+		alsa.driver_name = "snd_hda_intel"
+		device.bus_path = "pci-0000:2d:00.1"
+		sysfs.path = "/devices/pci0000:00/0000:00:03.1/0000:2d:00.1/sound/card0"
+		device.bus = "pci"
+		device.vendor.id = "10de"
+		device.vendor.name = "NVIDIA Corporation"
+		device.product.id = "10f8"
+		device.product.name = "TU104 HD Audio Controller"
+		device.string = "0"
+		device.description = "TU104 HD Audio Controller"
+		module-udev-detect.discovered = "1"
+		device.icon_name = "audio-card-pci"
+	Profiles:
+		output:hdmi-stereo: Digital Stereo (HDMI) Output (sinks: 1, sources: 0, priority: 5900, available: yes)
+		output:hdmi-surround: Digital Surround 5.1 (HDMI) Output (sinks: 1, sources: 0, priority: 800, available: yes)
+		output:hdmi-surround71: Digital Surround 7.1 (HDMI) Output (sinks: 1, sources: 0, priority: 800, available: yes)
+		output:hdmi-stereo-extra1: Digital Stereo (HDMI 2) Output (sinks: 1, sources: 0, priority: 5700, available: no)
+		output:hdmi-surround-extra1: Digital Surround 5.1 (HDMI 2) Output (sinks: 1, sources: 0, priority: 600, available: no)
+		output:hdmi-surround71-extra1: Digital Surround 7.1 (HDMI 2) Output (sinks: 1, sources: 0, priority: 600, available: no)
+		output:hdmi-stereo-extra2: Digital Stereo (HDMI 3) Output (sinks: 1, sources: 0, priority: 5700, available: yes)
+		output:hdmi-surround-extra2: Digital Surround 5.1 (HDMI 3) Output (sinks: 1, sources: 0, priority: 600, available: yes)
+		output:hdmi-surround71-extra2: Digital Surround 7.1 (HDMI 3) Output (sinks: 1, sources: 0, priority: 600, available: yes)
+		output:hdmi-stereo-extra3: Digital Stereo (HDMI 4) Output (sinks: 1, sources: 0, priority: 5700, available: no)
+		output:hdmi-surround-extra3: Digital Surround 5.1 (HDMI 4) Output (sinks: 1, sources: 0, priority: 600, available: no)
+		output:hdmi-surround71-extra3: Digital Surround 7.1 (HDMI 4) Output (sinks: 1, sources: 0, priority: 600, available: no)
+		output:hdmi-stereo-extra4: Digital Stereo (HDMI 5) Output (sinks: 1, sources: 0, priority: 5700, available: no)
+		output:hdmi-surround-extra4: Digital Surround 5.1 (HDMI 5) Output (sinks: 1, sources: 0, priority: 600, available: no)
+		output:hdmi-surround71-extra4: Digital Surround 7.1 (HDMI 5) Output (sinks: 1, sources: 0, priority: 600, available: no)
+		output:hdmi-stereo-extra5: Digital Stereo (HDMI 6) Output (sinks: 1, sources: 0, priority: 5700, available: no)
+		output:hdmi-surround-extra5: Digital Surround 5.1 (HDMI 6) Output (sinks: 1, sources: 0, priority: 600, available: no)
+		output:hdmi-surround71-extra5: Digital Surround 7.1 (HDMI 6) Output (sinks: 1, sources: 0, priority: 600, available: no)
+		output:hdmi-stereo-extra6: Digital Stereo (HDMI 7) Output (sinks: 1, sources: 0, priority: 5700, available: no)
+		output:hdmi-surround-extra6: Digital Surround 5.1 (HDMI 7) Output (sinks: 1, sources: 0, priority: 600, available: no)
+		output:hdmi-surround71-extra6: Digital Surround 7.1 (HDMI 7) Output (sinks: 1, sources: 0, priority: 600, available: no)
+		off: Off (sinks: 0, sources: 0, priority: 0, available: yes)
+	Active Profile: output:hdmi-stereo-extra2
+	Ports:
+		hdmi-output-0: HDMI / DisplayPort (type: Unknown, priority: 5900, latency offset: 0 usec, availability group: Legacy 1, available)
+			Properties:
+				device.icon_name = "video-display"
+				device.product.name = "ASUS MG278
+  "
+			Part of profile(s): output:hdmi-stereo, output:hdmi-surround, output:hdmi-surround71
+		hdmi-output-1: HDMI / DisplayPort 2 (type: Unknown, priority: 5800, latency offset: 0 usec, availability group: Legacy 1, not available)
+			Properties:
+				device.icon_name = "video-display"
+			Part of profile(s): output:hdmi-stereo-extra1, output:hdmi-surround-extra1, output:hdmi-surround71-extra1
+		hdmi-output-2: HDMI / DisplayPort 3 (type: Unknown, priority: 5700, latency offset: 0 usec, availability group: Legacy 1, available)
+			Properties:
+				device.icon_name = "video-display"
+				device.product.name = "SAMSUNG
+     "
+			Part of profile(s): output:hdmi-stereo-extra2, output:hdmi-surround-extra2, output:hdmi-surround71-extra2
+		hdmi-output-3: HDMI / DisplayPort 4 (type: Unknown, priority: 5600, latency offset: 0 usec, availability group: Legacy 1, not available)
+			Properties:
+				device.icon_name = "video-display"
+			Part of profile(s): output:hdmi-stereo-extra3, output:hdmi-surround-extra3, output:hdmi-surround71-extra3
+		hdmi-output-4: HDMI / DisplayPort 5 (type: Unknown, priority: 5500, latency offset: 0 usec, availability group: Legacy 1, not available)
+			Properties:
+				device.icon_name = "video-display"
+			Part of profile(s): output:hdmi-stereo-extra4, output:hdmi-surround-extra4, output:hdmi-surround71-extra4
+		hdmi-output-5: HDMI / DisplayPort 6 (type: Unknown, priority: 5400, latency offset: 0 usec, availability group: Legacy 1, not available)
+			Properties:
+				device.icon_name = "video-display"
+			Part of profile(s): output:hdmi-stereo-extra5, output:hdmi-surround-extra5, output:hdmi-surround71-extra5
+		hdmi-output-6: HDMI / DisplayPort 7 (type: Unknown, priority: 5300, latency offset: 0 usec, availability group: Legacy 1, not available)
+			Properties:
+				device.icon_name = "video-display"
+			Part of profile(s): output:hdmi-stereo-extra6, output:hdmi-surround-extra6, output:hdmi-surround71-extra6
