@@ -1,20 +1,24 @@
-BeforeAll {
-    Import-Module ./PoshPulseAudio.psm1
-
-    $testdata = @{}
-    foreach($child in (Get-ChildItem $dataFolder -Filter "*.txt")) {
-        $testdata[$child.BaseName] = Get-Content $child
-    }
-
-    InModuleScope PoshPulseAudio {
-        Mock pactl {
-            $testdata["cards"]
-        } -ParameterFilter { ($args -join " ") -eq "list cards" }
+BeforeDiscovery {
+    $Global:testdata = @{}
+    foreach($child in (Get-ChildItem $PSScriptRoot/testdata -Filter "*.txt")) {
+        $Global:testdata[$child.BaseName] = Get-Content $child
     }
 }
 
+BeforeAll {
+    Import-Module ./PoshPulseAudio.psm1
+}
+
 Describe 'Get-PulseAudioCards' {
+    BeforeAll {
+        InModuleScope PoshPulseAudio {
+            Mock pactl {
+                $Global:testdata["cards"]
+            } -ParameterFilter { ($args -join " ") -eq "list cards" }
+        }
+    }
+
     It 'Gets all pulse audio cards' {
-        Get-PulseAudioCards | Should -Be $testdata["cards"]
+        Get-PulseAudioCards | Should -Be $Global:testdata["cards"]
     }
 }
