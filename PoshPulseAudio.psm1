@@ -54,6 +54,12 @@ class PulseAudioCard {
 }
 
 function Get-PulseAudioCards {
+    [CmdletBinding()]
+    param (
+        [Parameter()]
+        [string]
+        $Name
+    )
     pactl list cards |
         Split-IndentedData |
         ForEach-Object {
@@ -62,7 +68,9 @@ function Get-PulseAudioCards {
                 Name = $_.FindChild("^Name:.*").Value -replace "Name: "
                 Driver = $_.FindChild("^Driver:.*").Value -replace "Driver: "
             }
-        }
+        } |
+        # Do not filter on $Name if it is not set
+        Where-Object { -not $Name -or $_.Name -eq $Name }
 }
 
 Export-ModuleMember -Function Get-PulseAudioCards

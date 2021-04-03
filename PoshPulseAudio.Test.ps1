@@ -37,35 +37,34 @@ Describe 'Get-PulseAudioCards' {
         $cards[2].Driver | Should -Be "module-alsa-card.c"
     }
 
-    It 'Returns empty when no cards are found' {
-        "an unimplemented test" | Should -Be "implemented"
-    }
-
     It 'Gets a pulse audio card by name' {
-        "an unimplemented test" | Should -Be "implemented"
+        $card = Get-PulseAudioCards -Name "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
+        
+        $card.Name | Should -Be "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
+        $card.Driver | Should -Be "module-alsa-card.c"
     }
 
     It 'Returns empty when named card is not found' {
-        "an unimplemented test" | Should -Be "implemented"
+        Set-ItResult -Skipped -Because "it is unimplemented"
     }
 
     It 'Gets a pulse audio card by wildcard name match' {
-        "an unimplemented test" | Should -Be "implemented"
+        Set-ItResult -Skipped -Because "it is unimplemented"
     }
 
     It 'Returns multiple cards when multiple matches are found' {
-        "an unimplemented test" | Should -Be "implemented"
+        Set-ItResult -Skipped -Because "it is unimplemented"
     }
 
     It 'Returns empty when no matching cards are found' {
-        "an unimplemented test" | Should -Be "implemented"
+        Set-ItResult -Skipped -Because "it is unimplemented"
     }
 
     It 'Populates profiles correctly' {
-        "an unimplemented test" | Should -Be "implemented"
+        Set-ItResult -Skipped -Because "it is unimplemented"
     }
 
     It 'Populates the active profile correctly' {
-        "an unimplemented test" | Should -Be "implemented"
+        Set-ItResult -Skipped -Because "it is unimplemented"
     }
 }
