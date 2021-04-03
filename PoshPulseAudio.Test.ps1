@@ -41,7 +41,6 @@ Describe 'Get-PulseAudioCards' {
         $card = Get-PulseAudioCards -Name "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
         
         $card.Name | Should -Be "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
-        $card.Driver | Should -Be "module-alsa-card.c"
     }
 
     It 'Returns empty when named card is not found' {
@@ -51,15 +50,24 @@ Describe 'Get-PulseAudioCards' {
     }
 
     It 'Gets a pulse audio card by wildcard name match' {
-        Set-ItResult -Skipped -Because "it is unimplemented"
+        $cards = Get-PulseAudioCards -Name "alsa_card.usb-FiiO_DigiHug_USB_Audio-*"
+        
+        $cards.Count | Should -Be 1
+        $cards[0].Name | Should -Be "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
     }
 
     It 'Returns multiple cards when multiple matches are found' {
-        Set-ItResult -Skipped -Because "it is unimplemented"
+        $cards = Get-PulseAudioCards -Name "alsa_card.usb-*"
+        
+        $cards.Count | Should -Be 2
+        $cards[0].Name | Should -Be "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
+        $cards[1].Name | Should -Be "alsa_card.usb-C-Media_Electronics_Inc._USB_Audio_Device-00"
     }
 
     It 'Returns empty when no matching cards are found' {
-        Set-ItResult -Skipped -Because "it is unimplemented"
+        $cards = Get-PulseAudioCards -Name "alsa_card.usb-DNE*"
+
+        $cards.Count | Should -Be 0
     }
 
     It 'Populates profiles correctly' {

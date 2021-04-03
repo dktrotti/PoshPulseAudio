@@ -70,7 +70,7 @@ function Get-PulseAudioCards {
             }
         } |
         # Do not filter on $Name if it is not set
-        Where-Object { -not $Name -or $_.Name -eq $Name }
+        Where-Object { -not $Name -or $_.Name -like $Name }
 }
 
 Export-ModuleMember -Function Get-PulseAudioCards
