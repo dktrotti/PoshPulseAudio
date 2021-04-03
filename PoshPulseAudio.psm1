@@ -51,26 +51,31 @@ function Get-PACard {
 function Set-PACardProfile {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ValueFromPipeline)]
         [object]
         $PACard,
         [Parameter(Mandatory)]
         [object]
         $PAProfile
     )
-    if ($PACard -is [PulseAudioCard]) {
+    # Because the test dot-sources PADataStructs.ps1 separately, the -is operator cannot be used
+    # here because the type handle is not the same
+    if ($PACard.GetType().Name -eq 'PulseAudioCard') {
         $PACardName = $PACard.Name
     } else {
         $PACardName = [string] $PACard
     }
 
-    if ($PAProfile -is [PulseAudioProfile]) {
+    if ($PAProfile.GetType().Name -eq 'PulseAudioProfile') {
         $PAProfileName = $PAProfile.SymbolicName
     } else {
         $PAProfileName = [string] $PAProfile
     }
 
-    pactl set-card-profile $PACardName $PAProfileName
+    $output = pactl set-card-profile $PACardName $PAProfileName
+    if ($output) {            
+        throw "Could not set profile for $PACardName to $PAProfileName`: $output"
+    }
 }
 
 Export-ModuleMember -Function Get-PACard

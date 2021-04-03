@@ -115,50 +115,42 @@ Describe 'Get-PACard' {
 
 Describe 'Set-PACardProfile' {
     BeforeAll {
+        $cardName = 'card1'
+        $profileName = 'profile1'
+        [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUserDeclaredVarsMoreThanAssignments', '')]
+        $paCard = [PulseAudioCard] @{ Name = $cardName }
+        [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUserDeclaredVarsMoreThanAssignments', '')]
+        $paProfile = [PulseAudioProfile] @{ SymbolicName = $profileName }
+
         InModuleScope PoshPulseAudio {
             Mock pactl {} -ParameterFilter { $args[0] -eq "set-card-profile" }
         }
     }
 
     It 'Sets the active profile using names' {
-        $cardName = 'card1'
-        $profileName = 'profile1'
         Set-PACardProfile -PACard $cardName -PAProfile $profileName 
 
         Should -Invoke pactl -ModuleName PoshPulseAudio -Times 1 -ParameterFilter { $args[1] -eq $cardName -and $args[2] -eq $profileName }
     }
 
     It 'Sets the active profile using objects' {
-        $cardName = 'card1'
-        $profileName = 'profile1'
-        $paCard = [PulseAudioCard] @{ Name = $cardName }
-        $paProfile = [PulseAudioProfile] @{ SymbolicName = $profileName }
         Set-PACardProfile -PACard $paCard -PAProfile $paProfile 
 
         Should -Invoke pactl -ModuleName PoshPulseAudio -Times 1 -ParameterFilter { $args[1] -eq $cardName -and $args[2] -eq $profileName }
     }
 
     It 'Sets the active profile using a card from the pipeline' {
-        Set-ItResult -Skipped -Because "unimplemented"
+        $paCard | Set-PACardProfile -PAProfile $paProfile 
+
+        Should -Invoke pactl -ModuleName PoshPulseAudio -Times 1 -ParameterFilter { $args[1] -eq $cardName -and $args[2] -eq $profileName }
     }
 
     It 'Throws an error when pactl outputs error message' {
-        Set-ItResult -Skipped -Because "unimplemented"
-    }
+        InModuleScope PoshPulseAudio {
+            Mock pactl { "Failure: No such entity" } -ParameterFilter { $args[0] -eq "set-card-profile" }
+        }
 
-    It 'Throws an error when card is not specified' {
-        Set-ItResult -Skipped -Because "unimplemented"
-    }
-
-    It 'Throws an error when profile is not specified' {
-        Set-ItResult -Skipped -Because "unimplemented"
-    }
-
-    It 'Throws an error when card is specified twice' {
-        Set-ItResult -Skipped -Because "unimplemented"
-    }
-
-    It 'Throws an error when profile is specified twice' {
-        Set-ItResult -Skipped -Because "unimplemented"
+        { Set-PACardProfile -PACard $paCard -PAProfile $paProfile } |
+            Should -Throw "Could not set profile for $cardName to $profileName`: Failure: No such entity"
     }
 }
