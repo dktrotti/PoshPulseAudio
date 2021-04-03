@@ -78,7 +78,30 @@ Describe 'Get-PulseAudioCards' {
     }
 
     It 'Populates profiles correctly' {
-        Set-ItResult -Skipped -Because "it is unimplemented"
+        $card = Get-PulseAudioCards -Name "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
+
+        $card.Profiles.Count | Should -Be 9
+
+        $card.Profiles[0].SymbolicName | Should -Be "input:analog-stereo"
+        $card.Profiles[0].DisplayName | Should -Be "Analog Stereo Input"
+        $card.Profiles[0].SinkCount | Should -Be 0
+        $card.Profiles[0].SourceCount | Should -Be 1
+        $card.Profiles[0].Priority | Should -Be 65
+        $card.Profiles[0].Available | Should -BeTrue
+
+        $card.Profiles[1].SymbolicName | Should -Be "input:iec958-stereo"
+        $card.Profiles[1].DisplayName | Should -Be "Digital Stereo (IEC958) Input"
+        $card.Profiles[1].SinkCount | Should -Be 0
+        $card.Profiles[1].SourceCount | Should -Be 1
+        $card.Profiles[1].Priority | Should -Be 55
+        $card.Profiles[1].Available | Should -BeFalse
+
+        $card.Profiles[8].SymbolicName | Should -Be "off"
+        $card.Profiles[8].DisplayName | Should -Be "Off"
+        $card.Profiles[8].SinkCount | Should -Be 0
+        $card.Profiles[8].SourceCount | Should -Be 0
+        $card.Profiles[8].Priority | Should -Be 0
+        $card.Profiles[8].Available | Should -BeTrue
     }
 
     It 'Populates the active profile correctly' {
