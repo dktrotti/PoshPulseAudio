@@ -6,7 +6,7 @@ BeforeDiscovery {
 }
 
 BeforeAll {
-    Remove-Module PoshPulseAudio
+    Remove-Module PoshPulseAudio -ErrorAction SilentlyContinue
     Import-Module ./PoshPulseAudio.psm1
 
     InModuleScope PoshPulseAudio {
@@ -16,7 +16,7 @@ BeforeAll {
     }
 }
 
-Describe 'Get-PulseAudioCards' {
+Describe 'Get-PACard' {
     BeforeAll {
         InModuleScope PoshPulseAudio {
             Mock pactl {
@@ -26,7 +26,7 @@ Describe 'Get-PulseAudioCards' {
     }
 
     It 'Gets all pulse audio cards' {
-        $cards = Get-PulseAudioCards
+        $cards = Get-PACard
         
         $cards.Count | Should -Be 3
         $cards[0].Index | Should -Be 0
@@ -41,20 +41,20 @@ Describe 'Get-PulseAudioCards' {
     }
 
     It 'Gets a pulse audio card by name' {
-        $card = Get-PulseAudioCards -Name "alsa_card.pci-0000_2d_00.1"
+        $card = Get-PACard -Name "alsa_card.pci-0000_2d_00.1"
         
         $card.Index | Should -Be 2
         $card.Name | Should -Be "alsa_card.pci-0000_2d_00.1"
     }
 
     It 'Returns empty when named card is not found' {
-        $card = Get-PulseAudioCards -Name "alsa_card.usb-DNE"
+        $card = Get-PACard -Name "alsa_card.usb-DNE"
 
         $card | Should -BeNullOrEmpty
     }
 
     It 'Gets a pulse audio card by wildcard name match' {
-        $cards = Get-PulseAudioCards -Name "alsa_card.usb-FiiO_DigiHug_USB_Audio-*"
+        $cards = Get-PACard -Name "alsa_card.usb-FiiO_DigiHug_USB_Audio-*"
         
         $cards.Count | Should -Be 1
         $cards[0].Name | Should -Be "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
@@ -62,7 +62,7 @@ Describe 'Get-PulseAudioCards' {
     }
 
     It 'Returns multiple cards when multiple matches are found' {
-        $cards = Get-PulseAudioCards -Name "alsa_card.usb-*"
+        $cards = Get-PACard -Name "alsa_card.usb-*"
         
         $cards.Count | Should -Be 2
         $cards[0].Name | Should -Be "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
@@ -72,13 +72,13 @@ Describe 'Get-PulseAudioCards' {
     }
 
     It 'Returns empty when no matching cards are found' {
-        $cards = Get-PulseAudioCards -Name "alsa_card.usb-DNE*"
+        $cards = Get-PACard -Name "alsa_card.usb-DNE*"
 
         $cards.Count | Should -Be 0
     }
 
     It 'Populates profiles correctly' {
-        $card = Get-PulseAudioCards -Name "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
+        $card = Get-PACard -Name "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
 
         $card.Profiles.Count | Should -Be 9
 
@@ -105,7 +105,7 @@ Describe 'Get-PulseAudioCards' {
     }
 
     It 'Populates the active profile correctly' {
-        $card = Get-PulseAudioCards -Name "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
+        $card = Get-PACard -Name "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
 
         $card.ActiveProfile.SymbolicName | Should -Be "output:iec958-stereo"
     }

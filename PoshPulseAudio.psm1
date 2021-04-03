@@ -98,7 +98,7 @@ function New-PulseAudioProfile {
     }
 }
 
-function Get-PulseAudioCards {
+function Get-PACard {
     [CmdletBinding()]
     param (
         [Parameter()]
@@ -123,4 +123,4 @@ function Get-PulseAudioCards {
         Where-Object { -not $Name -or $_.Name -like $Name }
 }
 
-Export-ModuleMember -Function Get-PulseAudioCards
+Export-ModuleMember -Function Get-PACard
