@@ -124,16 +124,30 @@ function Get-PACard {
 }
 
 function Set-PACardProfile {
-    [CmdletBinding()]
+    [CmdletBinding(PositionalBinding=$false)]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter()]
         [string]
-        $Card,
-        [Parameter(Mandatory=$true)]
+        $PACardName,
+        [Parameter()]
         [string]
-        $Profile
+        $PAProfileName,
+        [Parameter()]
+        [PulseAudioCard]
+        $PACard,
+        [Parameter()]
+        [PulseAudioProfile]
+        $PAProfile
     )
-    pactl set-card-profile $Card $Profile
+    if ($PACard) {
+        $PACardName = $PACard.Name
+    }
+
+    if ($PAProfile) {
+        $PAProfileName = $PAProfile.SymbolicName
+    }
+
+    pactl set-card-profile $PACardName $PAProfileName
 }
 
 Export-ModuleMember -Function Get-PACard

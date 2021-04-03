@@ -121,24 +121,45 @@ Describe 'Set-PACardProfile' {
     It 'Sets the active profile using names' {
         $cardName = 'card1'
         $profileName = 'profile1'
-        Set-PACardProfile -Card $cardName -Profile $profileName 
+        Set-PACardProfile -PACardName $cardName -PAProfileName $profileName 
 
         Should -Invoke pactl -ModuleName PoshPulseAudio -Times 1 -ParameterFilter { $args[1] -eq $cardName -and $args[2] -eq $profileName }
     }
 
     It 'Sets the active profile using objects' {
-        Set-ItResult -Skipped -Because "unimplemented"
+        Set-ItResult -Skipped -Because "Class definitions are currently inaccessible"
+
+        $cardName = 'card1'
+        $profileName = 'profile1'
+        # TODO: Reorganize scripts so test can access these classes
+        $paCard = [PulseAudioCard] @{ Name = $cardName }
+        $paProfile = [PulseAudioProfile] @{ SymbolicName = $profileName }
+        Set-PACardProfile -PACard $paCard -PAProfile $paProfile 
+
+        Should -Invoke pactl -ModuleName PoshPulseAudio -Times 1 -ParameterFilter { $args[1] -eq $cardName -and $args[2] -eq $profileName }
     }
 
-    It 'Sets the active profile using card name from pipeline' {
-        Set-ItResult -Skipped -Because "unimplemented"
-    }
-
-    It 'Sets the active profile using card object from pipeline' {
+    It 'Sets the active profile using both name and object' {
         Set-ItResult -Skipped -Because "unimplemented"
     }
 
     It 'Throws an error when pactl outputs error message' {
+        Set-ItResult -Skipped -Because "unimplemented"
+    }
+
+    It 'Throws an error when card is not specified' {
+        Set-ItResult -Skipped -Because "unimplemented"
+    }
+
+    It 'Throws an error when profile is not specified' {
+        Set-ItResult -Skipped -Because "unimplemented"
+    }
+
+    It 'Throws an error when card is specified twice' {
+        Set-ItResult -Skipped -Because "unimplemented"
+    }
+
+    It 'Throws an error when profile is specified twice' {
         Set-ItResult -Skipped -Because "unimplemented"
     }
 }
