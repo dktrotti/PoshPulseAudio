@@ -124,27 +124,25 @@ function Get-PACard {
 }
 
 function Set-PACardProfile {
-    [CmdletBinding(PositionalBinding=$false)]
+    [CmdletBinding()]
     param (
-        [Parameter()]
-        [string]
-        $PACardName,
-        [Parameter()]
-        [string]
-        $PAProfileName,
-        [Parameter()]
-        [PulseAudioCard]
+        [Parameter(Mandatory)]
+        [object]
         $PACard,
-        [Parameter()]
-        [PulseAudioProfile]
+        [Parameter(Mandatory)]
+        [object]
         $PAProfile
     )
-    if ($PACard) {
+    if ($PACard -is [PulseAudioCard]) {
         $PACardName = $PACard.Name
+    } else {
+        $PACardName = [string] $PACard
     }
 
-    if ($PAProfile) {
+    if ($PAProfile -is [PulseAudioProfile]) {
         $PAProfileName = $PAProfile.SymbolicName
+    } else {
+        $PAProfileName = [string] $PAProfile
     }
 
     pactl set-card-profile $PACardName $PAProfileName

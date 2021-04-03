@@ -121,7 +121,7 @@ Describe 'Set-PACardProfile' {
     It 'Sets the active profile using names' {
         $cardName = 'card1'
         $profileName = 'profile1'
-        Set-PACardProfile -PACardName $cardName -PAProfileName $profileName 
+        Set-PACardProfile -PACard $cardName -PAProfile $profileName 
 
         Should -Invoke pactl -ModuleName PoshPulseAudio -Times 1 -ParameterFilter { $args[1] -eq $cardName -and $args[2] -eq $profileName }
     }
@@ -139,7 +139,7 @@ Describe 'Set-PACardProfile' {
         Should -Invoke pactl -ModuleName PoshPulseAudio -Times 1 -ParameterFilter { $args[1] -eq $cardName -and $args[2] -eq $profileName }
     }
 
-    It 'Sets the active profile using both name and object' {
+    It 'Sets the active profile using a card from the pipeline' {
         Set-ItResult -Skipped -Because "unimplemented"
     }
 
