@@ -118,19 +118,19 @@ Describe 'Set-PACardProfile' {
         }
     }
 
-    It 'Sets the active theme by card name' {
+    It 'Sets the active profile using names' {
         Set-ItResult -Skipped -Because "unimplemented"
     }
 
-    It 'Sets the active theme by card object' {
+    It 'Sets the active profile using objects' {
         Set-ItResult -Skipped -Because "unimplemented"
     }
 
-    It 'Sets the active theme using card name from pipeline' {
+    It 'Sets the active profile using card name from pipeline' {
         Set-ItResult -Skipped -Because "unimplemented"
     }
 
-    It 'Sets the active theme using card object from pipeline' {
+    It 'Sets the active profile using card object from pipeline' {
         Set-ItResult -Skipped -Because "unimplemented"
     }
 
