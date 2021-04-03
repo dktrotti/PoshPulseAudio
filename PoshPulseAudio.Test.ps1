@@ -45,7 +45,9 @@ Describe 'Get-PulseAudioCards' {
     }
 
     It 'Returns empty when named card is not found' {
-        Set-ItResult -Skipped -Because "it is unimplemented"
+        $card = Get-PulseAudioCards -Name "alsa_card.usb-DNE"
+
+        $card | Should -BeNullOrEmpty
     }
 
     It 'Gets a pulse audio card by wildcard name match' {
