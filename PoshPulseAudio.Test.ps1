@@ -8,6 +8,12 @@ BeforeDiscovery {
 BeforeAll {
     Remove-Module PoshPulseAudio
     Import-Module ./PoshPulseAudio.psm1
+
+    InModuleScope PoshPulseAudio {
+        Mock pactl {
+            throw "pactl interation not mocked: pactl $($args -join " ")"
+        }
+    }
 }
 
 Describe 'Get-PulseAudioCards' {
