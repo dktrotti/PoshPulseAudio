@@ -29,18 +29,22 @@ Describe 'Get-PulseAudioCards' {
         $cards = Get-PulseAudioCards
         
         $cards.Count | Should -Be 3
+        $cards[0].Index | Should -Be 0
         $cards[0].Name | Should -Be "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
         $cards[0].Driver | Should -Be "module-alsa-card.c"
+        $cards[1].Index | Should -Be 1
         $cards[1].Name | Should -Be "alsa_card.usb-C-Media_Electronics_Inc._USB_Audio_Device-00"
         $cards[1].Driver | Should -Be "module-alsa-card.c"
+        $cards[2].Index | Should -Be 2
         $cards[2].Name | Should -Be "alsa_card.pci-0000_2d_00.1"
         $cards[2].Driver | Should -Be "module-alsa-card.c"
     }
 
     It 'Gets a pulse audio card by name' {
-        $card = Get-PulseAudioCards -Name "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
+        $card = Get-PulseAudioCards -Name "alsa_card.pci-0000_2d_00.1"
         
-        $card.Name | Should -Be "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
+        $card.Index | Should -Be 2
+        $card.Name | Should -Be "alsa_card.pci-0000_2d_00.1"
     }
 
     It 'Returns empty when named card is not found' {
@@ -54,6 +58,7 @@ Describe 'Get-PulseAudioCards' {
         
         $cards.Count | Should -Be 1
         $cards[0].Name | Should -Be "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
+        $cards[0].Index | Should -Be 0
     }
 
     It 'Returns multiple cards when multiple matches are found' {
@@ -61,7 +66,9 @@ Describe 'Get-PulseAudioCards' {
         
         $cards.Count | Should -Be 2
         $cards[0].Name | Should -Be "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
+        $cards[0].Index | Should -Be 0
         $cards[1].Name | Should -Be "alsa_card.usb-C-Media_Electronics_Inc._USB_Audio_Device-00"
+        $cards[1].Index | Should -Be 1
     }
 
     It 'Returns empty when no matching cards are found' {

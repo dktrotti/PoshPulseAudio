@@ -49,8 +49,18 @@ function Split-IndentedData {
 }
 
 class PulseAudioCard {
+    [int] $Index
     [string] $Name
     [string] $Driver
+}
+
+class PulseAudioProfile {
+    [string] $SymbolicName
+    [string] $DisplayName
+    [int] $SinkCount
+    [int] $SourceCount
+    [int] $Priority
+    [bool] $Available
 }
 
 function Get-PulseAudioCards {
@@ -65,6 +75,7 @@ function Get-PulseAudioCards {
         ForEach-Object {
             # TODO: Using FindChild and -replace is awkward, find a better way
             [PulseAudioCard] @{
+                Index = $_.Value -replace "Card #"
                 Name = $_.FindChild("^Name:.*").Value -replace "Name: "
                 Driver = $_.FindChild("^Driver:.*").Value -replace "Driver: "
             }
