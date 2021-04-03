@@ -110,3 +110,31 @@ Describe 'Get-PulseAudioCards' {
         $card.ActiveProfile.SymbolicName | Should -Be "output:iec958-stereo"
     }
 }
+
+Describe 'Set-PACardProfile' {
+    BeforeAll {
+        InModuleScope PoshPulseAudio {
+            Mock pactl {} -ParameterFilter { $args[0] -eq "set-card-profile" }
+        }
+    }
+
+    It 'Sets the active theme by card name' {
+        Set-ItResult -Skipped -Because "unimplemented"
+    }
+
+    It 'Sets the active theme by card object' {
+        Set-ItResult -Skipped -Because "unimplemented"
+    }
+
+    It 'Sets the active theme using card name from pipeline' {
+        Set-ItResult -Skipped -Because "unimplemented"
+    }
+
+    It 'Sets the active theme using card object from pipeline' {
+        Set-ItResult -Skipped -Because "unimplemented"
+    }
+
+    It 'Throws an error when pactl outputs error message' {
+        Set-ItResult -Skipped -Because "unimplemented"
+    }
+}
