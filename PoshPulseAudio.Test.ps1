@@ -36,4 +36,36 @@ Describe 'Get-PulseAudioCards' {
         $cards[2].Name | Should -Be "alsa_card.pci-0000_2d_00.1"
         $cards[2].Driver | Should -Be "module-alsa-card.c"
     }
+
+    It 'Returns empty when no cards are found' {
+        "an unimplemented test" | Should -Be "implemented"
+    }
+
+    It 'Gets a pulse audio card by name' {
+        "an unimplemented test" | Should -Be "implemented"
+    }
+
+    It 'Returns empty when named card is not found' {
+        "an unimplemented test" | Should -Be "implemented"
+    }
+
+    It 'Gets a pulse audio card by wildcard name match' {
+        "an unimplemented test" | Should -Be "implemented"
+    }
+
+    It 'Returns multiple cards when multiple matches are found' {
+        "an unimplemented test" | Should -Be "implemented"
+    }
+
+    It 'Returns empty when no matching cards are found' {
+        "an unimplemented test" | Should -Be "implemented"
+    }
+
+    It 'Populates profiles correctly' {
+        "an unimplemented test" | Should -Be "implemented"
+    }
+
+    It 'Populates the active profile correctly' {
+        "an unimplemented test" | Should -Be "implemented"
+    }
 }
