@@ -123,4 +123,18 @@ function Get-PACard {
         Where-Object { -not $Name -or $_.Name -like $Name }
 }
 
+function Set-PACardProfile {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]
+        $Card,
+        [Parameter(Mandatory=$true)]
+        [string]
+        $Profile
+    )
+    pactl set-card-profile $Card $Profile
+}
+
 Export-ModuleMember -Function Get-PACard
+Export-ModuleMember -Function Set-PACardProfile
