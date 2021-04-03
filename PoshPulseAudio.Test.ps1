@@ -9,6 +9,8 @@ BeforeAll {
     Remove-Module PoshPulseAudio -ErrorAction SilentlyContinue
     Import-Module ./PoshPulseAudio.psm1
 
+    . $PSScriptRoot/PADataStructs.ps1
+
     InModuleScope PoshPulseAudio {
         Mock pactl {
             throw "pactl interation not mocked: pactl $($args -join " ")"
@@ -127,11 +129,8 @@ Describe 'Set-PACardProfile' {
     }
 
     It 'Sets the active profile using objects' {
-        Set-ItResult -Skipped -Because "Class definitions are currently inaccessible"
-
         $cardName = 'card1'
         $profileName = 'profile1'
-        # TODO: Reorganize scripts so test can access these classes
         $paCard = [PulseAudioCard] @{ Name = $cardName }
         $paProfile = [PulseAudioProfile] @{ SymbolicName = $profileName }
         Set-PACardProfile -PACard $paCard -PAProfile $paProfile 
