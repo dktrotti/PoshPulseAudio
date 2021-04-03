@@ -108,12 +108,15 @@ function Get-PulseAudioCards {
     pactl list cards |
         Split-IndentedData |
         ForEach-Object {
+            $profiles = $_.FindChild("^Profiles:.*").Children | ForEach-Object { New-PulseAudioProfile $_.Value }
+            $activeProfileName = $_.FindChild("^Active Profile:.*").Value -replace "Active Profile: "
             # TODO: Using FindChild and -replace is awkward, find a better way
             [PulseAudioCard] @{
                 Index = $_.Value -replace "Card #"
                 Name = $_.FindChild("^Name:.*").Value -replace "Name: "
                 Driver = $_.FindChild("^Driver:.*").Value -replace "Driver: "
-                Profiles = $_.FindChild("^Profiles:.*").Children | ForEach-Object { New-PulseAudioProfile $_.Value }
+                Profiles = $profiles
+                ActiveProfile = $profiles | Where-Object { $_.SymbolicName -eq $activeProfileName } | Select-Object -First 1
             }
         } |
         # Do not filter on $Name if it is not set

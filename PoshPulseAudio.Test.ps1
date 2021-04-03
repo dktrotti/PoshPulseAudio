@@ -105,6 +105,8 @@ Describe 'Get-PulseAudioCards' {
     }
 
     It 'Populates the active profile correctly' {
-        Set-ItResult -Skipped -Because "it is unimplemented"
+        $card = Get-PulseAudioCards -Name "alsa_card.usb-FiiO_DigiHug_USB_Audio-01"
+
+        $card.ActiveProfile.SymbolicName | Should -Be "output:iec958-stereo"
     }
 }
