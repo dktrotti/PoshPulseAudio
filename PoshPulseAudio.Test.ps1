@@ -154,3 +154,25 @@ Describe 'Set-PACardProfile' {
             Should -Throw "Could not set profile for $cardName to $profileName`: Failure: No such entity"
     }
 }
+
+Describe 'Get-PASink' {
+    BeforeAll {
+        InModuleScope PoshPulseAudio {
+            Mock pactl {
+                $Global:testdata["sinks"]
+            } -ParameterFilter { ($args -join " ") -eq "list sinks" }
+        }
+    }
+
+    It 'Gets all sinks' {
+        $sinks = Get-PASink
+        
+        $sinks.Count | Should -Be 2
+        $sinks[0].Index | Should -Be 1
+        $sinks[0].Name | Should -Be "alsa_output.usb-FiiO_DigiHug_USB_Audio-01.iec958-stereo"
+        $sinks[0].Description | Should -Be "Fiio E10 Digital Stereo (IEC958)"
+        $sinks[1].Index | Should -Be 26
+        $sinks[1].Name | Should -Be "alsa_output.pci-0000_2d_00.1.hdmi-stereo-extra2"
+        $sinks[1].Description | Should -Be "TU104 HD Audio Controller Digital Stereo (HDMI 3)"
+    }
+}
