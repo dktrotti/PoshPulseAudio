@@ -175,4 +175,39 @@ Describe 'Get-PASink' {
         $sinks[1].Name | Should -Be "alsa_output.pci-0000_2d_00.1.hdmi-stereo-extra2"
         $sinks[1].Description | Should -Be "TU104 HD Audio Controller Digital Stereo (HDMI 3)"
     }
+
+    It 'Gets a pulse audio sink by name' {
+        $sink = Get-PASink -Name "alsa_output.usb-FiiO_DigiHug_USB_Audio-01.iec958-stereo"
+        
+        $sink.Index | Should -Be 1
+        $sink.Name | Should -Be "alsa_output.usb-FiiO_DigiHug_USB_Audio-01.iec958-stereo"
+    }
+
+    It 'Returns empty when named sink is not found' {
+        $sink = Get-PASink -Name "alsa_output.usb-FiiO_DigiHug_USB_Audio-01.DNE"
+
+        $sink | Should -BeNullOrEmpty
+    }
+
+    It 'Gets a pulse audio sink by wildcard name match' {
+        $sinks = Get-PASink -Name "alsa_output.usb-FiiO_DigiHug_USB_Audio-01.*"
+        
+        $sinks.Count | Should -Be 1
+        $sinks[0].Name | Should -Be "alsa_output.usb-FiiO_DigiHug_USB_Audio-01.iec958-stereo"
+        $sinks[0].Index | Should -Be 1
+    }
+
+    It 'Returns multiple sinks when multiple matches are found' {
+        $sinks = Get-PASink -Name "alsa_output.*"
+        
+        $sinks.Count | Should -Be 2
+        $sinks[0].Index | Should -Be 1
+        $sinks[1].Index | Should -Be 26
+    }
+
+    It 'Returns empty when no matching sinks are found' {
+        $sinks = Get-PASink -Name "alsa_output.DNE*"
+
+        $sinks.Count | Should -Be 0
+    }
 }

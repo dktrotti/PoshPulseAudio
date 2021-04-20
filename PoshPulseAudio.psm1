@@ -79,6 +79,12 @@ function Set-PACardProfile {
 }
 
 function Get-PASink {
+    [CmdletBinding()]
+    param (
+        [Parameter()]
+        [string]
+        $Name
+    )
     pactl list sinks |
         Split-IndentedData |
         ForEach-Object {
@@ -88,7 +94,9 @@ function Get-PASink {
                 Name = $_.FindChild("^Name:.*").Value -replace "Name: "
                 Description = $_.FindChild("^Description:.*").Value -replace "Description: "
             }
-        }
+        } |
+        # Do not filter on $Name if it is not set
+        Where-Object { -not $Name -or $_.Name -like $Name }
 }
 
 Export-ModuleMember -Function Get-PACard
