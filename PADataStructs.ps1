@@ -1,10 +1,13 @@
-# TODO: Implement ToString on these types
 class PulseAudioCard {
     [int] $Index
     [string] $Name
     [string] $Driver
     [PulseAudioProfile[]] $Profiles
     [PulseAudioProfile] $ActiveProfile
+
+    [string] ToString() {
+        return ConvertTo-Json $this
+    }
 }
 
 class PulseAudioProfile {
@@ -14,10 +17,18 @@ class PulseAudioProfile {
     [int] $SourceCount
     [int] $Priority
     [bool] $Available
+
+    [string] ToString() {
+        return ConvertTo-Json $this
+    }
 }
 
 class PulseAudioSink {
     [int] $Index
     [string] $Name
     [string] $Description
+
+    [string] ToString() {
+        return ConvertTo-Json $this
+    }
 }
