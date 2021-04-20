@@ -78,5 +78,19 @@ function Set-PACardProfile {
     }
 }
 
+function Get-PASink {
+    pactl list sinks |
+        Split-IndentedData |
+        ForEach-Object {
+            # TODO: Using FindChild and -replace is awkward, find a better way
+            [PulseAudioSink] @{
+                Index = $_.Value -replace "Sink #"
+                Name = $_.FindChild("^Name:.*").Value -replace "Name: "
+                Description = $_.FindChild("^Description:.*").Value -replace "Description: "
+            }
+        }
+}
+
 Export-ModuleMember -Function Get-PACard
 Export-ModuleMember -Function Set-PACardProfile
+Export-ModuleMember -Function Get-PASink

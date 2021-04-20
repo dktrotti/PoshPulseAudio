@@ -15,3 +15,9 @@ class PulseAudioProfile {
     [int] $Priority
     [bool] $Available
 }
+
+class PulseAudioSink {
+    [int] $Index
+    [string] $Name
+    [string] $Description
+}
