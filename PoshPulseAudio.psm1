@@ -34,12 +34,11 @@ function Get-PACard {
         Split-IndentedData |
         ForEach-Object {
             $profiles = $_.FindChild("^Profiles:.*").Children | ForEach-Object { New-PulseAudioProfile $_.Value }
-            $activeProfileName = $_.FindChild("^Active Profile:.*").Value -replace "Active Profile: "
-            # TODO: Using FindChild and -replace is awkward, find a better way
+            $activeProfileName = $_.ParseChildValue("Active Profile: ")
             [PulseAudioCard] @{
-                Index = $_.Value -replace "Card #"
-                Name = $_.FindChild("^Name:.*").Value -replace "Name: "
-                Driver = $_.FindChild("^Driver:.*").Value -replace "Driver: "
+                Index = $_.ParseValue("Card #")
+                Name = $_.ParseChildValue("Name: ")
+                Driver = $_.ParseChildValue("Driver: ")
                 Profiles = $profiles
                 ActiveProfile = $profiles | Where-Object { $_.SymbolicName -eq $activeProfileName } | Select-Object -First 1
             }
@@ -88,11 +87,10 @@ function Get-PASink {
     pactl list sinks |
         Split-IndentedData |
         ForEach-Object {
-            # TODO: Using FindChild and -replace is awkward, find a better way
             [PulseAudioSink] @{
-                Index = $_.Value -replace "Sink #"
-                Name = $_.FindChild("^Name:.*").Value -replace "Name: "
-                Description = $_.FindChild("^Description:.*").Value -replace "Description: "
+                Index = $_.ParseValue("Sink #")
+                Name = $_.ParseChildValue("Name: ")
+                Description = $_.ParseChildValue("Description: ")
             }
         } |
         # Do not filter on $Name if it is not set

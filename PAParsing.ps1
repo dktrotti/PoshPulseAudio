@@ -6,6 +6,14 @@ class IndentedDataItem {
         return $this.Children | Where-Object { $_.Value -match $pattern } | Select-Object -First 1
     }
 
+    [string] ParseChildValue([string] $prefix) {
+        return $this.FindChild("^$prefix.*").Value -replace $prefix
+    }
+
+    [string] ParseValue([string] $prefix) {
+        return $this.Value -replace $prefix
+    }
+
     [string] ToString() {
         return "Value: $($this.Value) Children: [$($this.Children)]"
     }
