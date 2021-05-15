@@ -239,3 +239,28 @@ Describe 'GetPASinkInput' {
         $sinks[2].ProcessId | Should -Be 5307
     }
 }
+
+Describe 'GetPASource' {
+    BeforeAll {
+        InModuleScope PoshPulseAudio {
+            Mock pactl {
+                $Global:testdata["sources"]
+            } -ParameterFilter { ($args -join " ") -eq "list sources" }
+        }
+    }
+
+    It 'Gets all sources' {
+        $sinks = Get-PASource
+        
+        $sinks.Count | Should -Be 3
+        $sinks[0].Index | Should -Be 1
+        $sinks[0].Name | Should -Be "alsa_output.usb-FiiO_DigiHug_USB_Audio-01.iec958-stereo.monitor"
+        $sinks[0].Description | Should -Be "Monitor of Fiio E10 Digital Stereo (IEC958)"
+        $sinks[1].Index | Should -Be 2
+        $sinks[1].Name | Should -Be "alsa_input.usb-C-Media_Electronics_Inc._USB_Audio_Device-00.mono-fallback"
+        $sinks[1].Description | Should -Be "Audio Adapter (Unitek Y-247A) Mono"
+        $sinks[2].Index | Should -Be 28
+        $sinks[2].Name | Should -Be "alsa_output.pci-0000_2d_00.1.hdmi-stereo-extra2.monitor"
+        $sinks[2].Description | Should -Be "Monitor of TU104 HD Audio Controller Digital Stereo (HDMI 3)"
+    }
+}

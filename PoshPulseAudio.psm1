@@ -110,7 +110,20 @@ function Get-PASinkInput {
         }
 }
 
+function Get-PASource {
+    pactl list sources |
+        Split-IndentedData |
+        ForEach-Object {
+            [PulseAudioSource] @{
+                Index = $_.ParseValue("Source #")
+                Name = $_.ParseChildValue("Name: ")
+                Description = $_.ParseChildValue("Description: ")
+            }
+        }
+}
+
 Export-ModuleMember -Function Get-PACard
 Export-ModuleMember -Function Set-PACardProfile
 Export-ModuleMember -Function Get-PASink
 Export-ModuleMember -Function Get-PASinkInput
+Export-ModuleMember -Function Get-PASource
