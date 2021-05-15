@@ -111,6 +111,12 @@ function Get-PASinkInput {
 }
 
 function Get-PASource {
+    [CmdletBinding()]
+    param (
+        [Parameter()]
+        [string]
+        $Name
+    )
     pactl list sources |
         Split-IndentedData |
         ForEach-Object {
@@ -119,7 +125,9 @@ function Get-PASource {
                 Name = $_.ParseChildValue("Name: ")
                 Description = $_.ParseChildValue("Description: ")
             }
-        }
+        } |
+        # Do not filter on $Name if it is not set
+        Where-Object { -not $Name -or $_.Name -like $Name }
 }
 
 Export-ModuleMember -Function Get-PACard

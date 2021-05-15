@@ -250,17 +250,52 @@ Describe 'GetPASource' {
     }
 
     It 'Gets all sources' {
-        $sinks = Get-PASource
+        $sources = Get-PASource
         
-        $sinks.Count | Should -Be 3
-        $sinks[0].Index | Should -Be 1
-        $sinks[0].Name | Should -Be "alsa_output.usb-FiiO_DigiHug_USB_Audio-01.iec958-stereo.monitor"
-        $sinks[0].Description | Should -Be "Monitor of Fiio E10 Digital Stereo (IEC958)"
-        $sinks[1].Index | Should -Be 2
-        $sinks[1].Name | Should -Be "alsa_input.usb-C-Media_Electronics_Inc._USB_Audio_Device-00.mono-fallback"
-        $sinks[1].Description | Should -Be "Audio Adapter (Unitek Y-247A) Mono"
-        $sinks[2].Index | Should -Be 28
-        $sinks[2].Name | Should -Be "alsa_output.pci-0000_2d_00.1.hdmi-stereo-extra2.monitor"
-        $sinks[2].Description | Should -Be "Monitor of TU104 HD Audio Controller Digital Stereo (HDMI 3)"
+        $sources.Count | Should -Be 3
+        $sources[0].Index | Should -Be 1
+        $sources[0].Name | Should -Be "alsa_output.usb-FiiO_DigiHug_USB_Audio-01.iec958-stereo.monitor"
+        $sources[0].Description | Should -Be "Monitor of Fiio E10 Digital Stereo (IEC958)"
+        $sources[1].Index | Should -Be 2
+        $sources[1].Name | Should -Be "alsa_input.usb-C-Media_Electronics_Inc._USB_Audio_Device-00.mono-fallback"
+        $sources[1].Description | Should -Be "Audio Adapter (Unitek Y-247A) Mono"
+        $sources[2].Index | Should -Be 28
+        $sources[2].Name | Should -Be "alsa_output.pci-0000_2d_00.1.hdmi-stereo-extra2.monitor"
+        $sources[2].Description | Should -Be "Monitor of TU104 HD Audio Controller Digital Stereo (HDMI 3)"
+    }
+
+    It 'Gets a pulse audio source by name' {
+        $source = Get-PASource -Name "alsa_input.usb-C-Media_Electronics_Inc._USB_Audio_Device-00.mono-fallback"
+        
+        $source.Index | Should -Be 2
+        $source.Name | Should -Be "alsa_input.usb-C-Media_Electronics_Inc._USB_Audio_Device-00.mono-fallback"
+    }
+
+    It 'Returns empty when named source is not found' {
+        $source = Get-PASource -Name "alsa_input.usb-C-Media_Electronics_Inc.DNE"
+
+        $source | Should -BeNullOrEmpty
+    }
+
+    It 'Gets a pulse audio source by wildcard name match' {
+        $sources = Get-PASource -Name "alsa_output.usb-FiiO_*"
+        
+        $sources.Count | Should -Be 1
+        $sources[0].Index | Should -Be 1
+        $sources[0].Name | Should -Be "alsa_output.usb-FiiO_DigiHug_USB_Audio-01.iec958-stereo.monitor"
+    }
+
+    It 'Returns multiple sources when multiple matches are found' {
+        $sources = Get-PASource -Name "alsa_output.*"
+        
+        $sources.Count | Should -Be 2
+        $sources[0].Index | Should -Be 1
+        $sources[1].Index | Should -Be 28
+    }
+
+    It 'Returns empty when no matching sources are found' {
+        $sources = Get-PASource -Name "alsa_output.DNE*"
+
+        $sources.Count | Should -Be 0
     }
 }
