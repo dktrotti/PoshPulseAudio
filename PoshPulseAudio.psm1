@@ -97,6 +97,20 @@ function Get-PASink {
         Where-Object { -not $Name -or $_.Name -like $Name }
 }
 
+function Get-PASinkInput {
+    pactl list sink-inputs |
+        Split-IndentedData |
+        ForEach-Object {
+            [PulseAudioSinkInput] @{
+                Index = $_.ParseValue("Sink Input #")
+                ApplicationName = $_.FindChild("Properties").ParseChildValue("application.name = ").Trim('"')
+                BinaryName = $_.FindChild("Properties").ParseChildValue("application.process.binary = ").Trim('"')
+                ProcessId = $_.FindChild("Properties").ParseChildValue("application.process.id = ").Trim('"')
+            }
+        }
+}
+
 Export-ModuleMember -Function Get-PACard
 Export-ModuleMember -Function Set-PACardProfile
 Export-ModuleMember -Function Get-PASink
+Export-ModuleMember -Function Get-PASinkInput

@@ -32,3 +32,14 @@ class PulseAudioSink {
         return ConvertTo-Json $this
     }
 }
+
+class PulseAudioSinkInput {
+    [int] $Index
+    [string] $ApplicationName
+    [string] $BinaryName
+    [int] $ProcessId
+
+    [string] ToString() {
+        return ConvertTo-Json $this
+    }
+}

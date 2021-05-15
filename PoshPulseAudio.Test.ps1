@@ -211,3 +211,31 @@ Describe 'Get-PASink' {
         $sinks.Count | Should -Be 0
     }
 }
+
+Describe 'GetPASinkInput' {
+    BeforeAll {
+        InModuleScope PoshPulseAudio {
+            Mock pactl {
+                $Global:testdata["sinkinputs"]
+            } -ParameterFilter { ($args -join " ") -eq "list sink-inputs" }
+        }
+    }
+
+    It 'Gets all sink inputs' {
+        $sinks = Get-PASinkInput
+        
+        $sinks.Count | Should -Be 3
+        $sinks[0].Index | Should -Be 24
+        $sinks[0].ApplicationName | Should -Be "speech-dispatcher-espeak-ng"
+        $sinks[0].BinaryName | Should -Be "sd_espeak-ng"
+        $sinks[0].ProcessId | Should -Be 15245
+        $sinks[1].Index | Should -Be 25
+        $sinks[1].ApplicationName | Should -Be "speech-dispatcher-dummy"
+        $sinks[1].BinaryName | Should -Be "sd_dummy"
+        $sinks[1].ProcessId | Should -Be 15251
+        $sinks[2].Index | Should -Be 267
+        $sinks[2].ApplicationName | Should -Be "WEBRTC VoiceEngine"
+        $sinks[2].BinaryName | Should -Be "Discord"
+        $sinks[2].ProcessId | Should -Be 5307
+    }
+}

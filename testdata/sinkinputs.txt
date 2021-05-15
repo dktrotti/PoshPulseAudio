@@ -1,0 +1,86 @@
+Sink Input #24
+	Driver: protocol-native.c
+	Owner Module: 10
+	Client: 36
+	Sink: 1
+	Sample Specification: s16le 1ch 44100Hz
+	Channel Map: mono
+	Format: pcm, format.sample_format = "\"s16le\""  format.rate = "44100"  format.channels = "1"  format.channel_map = "\"mono\""
+	Corked: no
+	Mute: no
+	Volume: mono: 65536 / 100% / 0.00 dB
+	        balance 0.00
+	Buffer Latency: 0 usec
+	Sink Latency: 14068 usec
+	Resample method: copy
+	Properties:
+		media.name = "playback"
+		application.name = "speech-dispatcher-espeak-ng"
+		native-protocol.peer = "UNIX socket client"
+		native-protocol.version = "34"
+		application.process.id = "15245"
+		application.process.user = "dominic"
+		application.process.host = "pop-os"
+		application.process.binary = "sd_espeak-ng"
+		application.language = "C"
+		window.x11.display = ":1"
+		application.process.machine_id = "6813af0beb44150feab6f41b604c45c3"
+		module-stream-restore.id = "sink-input-by-application-name:speech-dispatcher-espeak-ng"
+
+Sink Input #25
+	Driver: protocol-native.c
+	Owner Module: 10
+	Client: 37
+	Sink: 1
+	Sample Specification: s16le 1ch 44100Hz
+	Channel Map: mono
+	Format: pcm, format.sample_format = "\"s16le\""  format.rate = "44100"  format.channels = "1"  format.channel_map = "\"mono\""
+	Corked: no
+	Mute: no
+	Volume: mono: 65536 / 100% / 0.00 dB
+	        balance 0.00
+	Buffer Latency: 0 usec
+	Sink Latency: 14050 usec
+	Resample method: copy
+	Properties:
+		media.name = "playback"
+		application.name = "speech-dispatcher-dummy"
+		native-protocol.peer = "UNIX socket client"
+		native-protocol.version = "34"
+		application.process.id = "15251"
+		application.process.user = "dominic"
+		application.process.host = "pop-os"
+		application.process.binary = "sd_dummy"
+		application.language = "C"
+		window.x11.display = ":1"
+		application.process.machine_id = "6813af0beb44150feab6f41b604c45c3"
+		module-stream-restore.id = "sink-input-by-application-name:speech-dispatcher-dummy"
+
+Sink Input #267
+	Driver: protocol-native.c
+	Owner Module: 10
+	Client: 9
+	Sink: 1
+	Sample Specification: s16le 2ch 44100Hz
+	Channel Map: front-left,front-right
+	Format: pcm, format.sample_format = "\"s16le\""  format.rate = "44100"  format.channels = "2"  format.channel_map = "\"front-left,front-right\""
+	Corked: no
+	Mute: no
+	Volume: front-left: 65536 / 100% / 0.00 dB,   front-right: 65536 / 100% / 0.00 dB
+	        balance 0.00
+	Buffer Latency: 16984 usec
+	Sink Latency: 14036 usec
+	Resample method: n/a
+	Properties:
+		media.name = "playStream"
+		application.name = "WEBRTC VoiceEngine"
+		native-protocol.peer = "UNIX socket client"
+		native-protocol.version = "34"
+		application.process.id = "5307"
+		application.process.user = "dominic"
+		application.process.host = "pop-os"
+		application.process.binary = "Discord"
+		application.language = "en_CA.UTF-8"
+		window.x11.display = ":1"
+		application.process.machine_id = "6813af0beb44150feab6f41b604c45c3"
+		module-stream-restore.id = "sink-input-by-application-name:WEBRTC VoiceEngine"
