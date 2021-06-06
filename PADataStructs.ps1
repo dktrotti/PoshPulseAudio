@@ -53,3 +53,14 @@ class PulseAudioSource {
         return ConvertTo-Json $this
     }
 }
+
+class PulseAudioSourceOutput {
+    [int] $Index
+    [string] $ApplicationName
+    [string] $BinaryName
+    [int] $ProcessId
+
+    [string] ToString() {
+        return ConvertTo-Json $this
+    }
+}

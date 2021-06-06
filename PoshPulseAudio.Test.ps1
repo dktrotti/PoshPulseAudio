@@ -299,3 +299,23 @@ Describe 'GetPASource' {
         $sources.Count | Should -Be 0
     }
 }
+
+Describe 'GetPASourceOutput' {
+    BeforeAll {
+        InModuleScope PoshPulseAudio {
+            Mock pactl {
+                $Global:testdata["sourceoutputs"]
+            } -ParameterFilter { ($args -join " ") -eq "list source-outputs" }
+        }
+    }
+
+    It 'Gets all source outputs' {
+        $sources = Get-PASourceOutput
+        
+        $sources.Count | Should -Be 1
+        $sources[0].Index | Should -Be 13
+        $sources[0].ApplicationName | Should -Be "WEBRTC VoiceEngine"
+        $sources[0].BinaryName | Should -Be "Discord"
+        $sources[0].ProcessId | Should -Be 5307
+    }
+}
