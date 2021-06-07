@@ -319,3 +319,45 @@ Describe 'GetPASourceOutput' {
         $sources[0].ProcessId | Should -Be 5307
     }
 }
+
+Describe 'SetPAInputSink' {
+    BeforeAll {
+        $sinkName = 'sink1'
+        $inputIndex = 2
+        [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUserDeclaredVarsMoreThanAssignments', '')]
+        $paSink = [PulseAudioSink] @{ Name = $sinkName }
+        [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUserDeclaredVarsMoreThanAssignments', '')]
+        $paSinkInput = [PulseAudioSinkInput] @{ Index = $inputIndex }
+
+        InModuleScope PoshPulseAudio {
+            Mock pactl {} -ParameterFilter { $args[0] -eq "move-sink-input" }
+        }
+    }
+
+    It 'Moves the input to the sink using primitives' {
+        Set-PAInputSink -PASink $sinkName -PAInput $inputIndex 
+
+        Should -Invoke pactl -ModuleName PoshPulseAudio -Times 1 -ParameterFilter { $args[1] -eq $inputIndex -and $args[2] -eq $sinkName }
+    }
+
+    It 'Moves the input to the sink using objects' {
+        Set-PAInputSink -PASink $paSink -PAInput $paSinkInput 
+
+        Should -Invoke pactl -ModuleName PoshPulseAudio -Times 1 -ParameterFilter { $args[1] -eq $inputIndex -and $args[2] -eq $sinkName }
+    }
+
+    It 'Moves the input using an input from the pipeline' {
+        $paSinkInput | Set-PAInputSink -PASink $paSink 
+
+        Should -Invoke pactl -ModuleName PoshPulseAudio -Times 1 -ParameterFilter { $args[1] -eq $inputIndex -and $args[2] -eq $sinkName }
+    }
+
+    It 'Throws an error when pactl outputs error message' {
+        InModuleScope PoshPulseAudio {
+            Mock pactl { "Failure: No such entity" } -ParameterFilter { $args[0] -eq "move-sink-input" }
+        }
+
+        { Set-PAInputSink -PASink $paSink -PAInput $paSinkInput } |
+            Should -Throw "Could not move input $inputIndex to $sinkName`: Failure: No such entity"
+    }
+}

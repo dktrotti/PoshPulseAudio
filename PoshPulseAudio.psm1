@@ -143,9 +143,40 @@ function Get-PASourceOutput {
         }
 }
 
+function Set-PAInputSink {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)]
+        [object]
+        $PASink,
+        [Parameter(Mandatory, ValueFromPipeline)]
+        [object]
+        $PAInput
+    )
+    # Because the test dot-sources PADataStructs.ps1 separately, the -is operator cannot be used
+    # here because the type handle is not the same
+    if ($PASink.GetType().Name -eq 'PulseAudioSink') {
+        $PASinkName = $PASink.Name
+    } else {
+        $PASinkName = [string] $PASink
+    }
+
+    if ($PAInput.GetType().Name -eq 'PulseAudioSinkInput') {
+        $PAInputIndex = $PAInput.Index
+    } else {
+        $PAInputIndex = [int] $PAInput
+    }
+
+    $output = pactl move-sink-input $PAInputIndex $PASinkName
+    if ($output) {            
+        throw "Could not move input $PAInputIndex to $PASinkName`: $output"
+    }
+}
+
 Export-ModuleMember -Function Get-PACard
 Export-ModuleMember -Function Set-PACardProfile
 Export-ModuleMember -Function Get-PASink
 Export-ModuleMember -Function Get-PASinkInput
 Export-ModuleMember -Function Get-PASource
 Export-ModuleMember -Function Get-PASourceOutput
+Export-ModuleMember -Function Set-PAInputSink
