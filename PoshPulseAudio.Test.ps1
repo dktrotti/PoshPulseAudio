@@ -361,3 +361,42 @@ Describe 'SetPAInputSink' {
             Should -Throw "Could not move input $inputIndex to $sinkName`: Failure: No such entity"
     }
 }
+
+Describe 'SetDefaultPASink' {
+    BeforeAll {
+        $sinkName = 'sink1'
+        [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUserDeclaredVarsMoreThanAssignments', '')]
+        $paSink = [PulseAudioSink] @{ Name = $sinkName }
+
+        InModuleScope PoshPulseAudio {
+            Mock pactl {} -ParameterFilter { $args[0] -eq "set-default-sink" }
+        }
+    }
+
+    It 'Sets the default sink by name' {
+        Set-DefaultPASink -PASink $sinkName
+
+        Should -Invoke pactl -ModuleName PoshPulseAudio -Times 1 -ParameterFilter { $args[1] -eq $sinkName }
+    }
+
+    It 'Sets the default sink using objects' {
+        Set-DefaultPASink -PASink $paSink
+
+        Should -Invoke pactl -ModuleName PoshPulseAudio -Times 1 -ParameterFilter { $args[1] -eq $sinkName }
+    }
+
+    It 'Sets the default sink from the pipeline' {
+        $paSink | Set-DefaultPASink
+
+        Should -Invoke pactl -ModuleName PoshPulseAudio -Times 1 -ParameterFilter { $args[1] -eq $sinkName }
+    }
+
+    It 'Throws an error when pactl outputs error message' {
+        InModuleScope PoshPulseAudio {
+            Mock pactl { "Failure: No such entity" } -ParameterFilter { $args[0] -eq "set-default-sink" }
+        }
+
+        { Set-DefaultPASink -PASink $paSink } |
+            Should -Throw "Could not set default sink to $sinkName`: Failure: No such entity"
+    }
+}

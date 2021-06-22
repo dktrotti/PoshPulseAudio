@@ -173,6 +173,27 @@ function Set-PAInputSink {
     }
 }
 
+function Set-DefaultPASink {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory, ValueFromPipeline)]
+        [object]
+        $PASink
+    )
+    # Because the test dot-sources PADataStructs.ps1 separately, the -is operator cannot be used
+    # here because the type handle is not the same
+    if ($PASink.GetType().Name -eq 'PulseAudioSink') {
+        $PASinkName = $PASink.Name
+    } else {
+        $PASinkName = [string] $PASink
+    }
+
+    $output = pactl set-default-sink $PASinkName
+    if ($output) {            
+        throw "Could not set default sink to $PASinkName`: $output"
+    }
+}
+
 Export-ModuleMember -Function Get-PACard
 Export-ModuleMember -Function Set-PACardProfile
 Export-ModuleMember -Function Get-PASink
@@ -180,3 +201,4 @@ Export-ModuleMember -Function Get-PASinkInput
 Export-ModuleMember -Function Get-PASource
 Export-ModuleMember -Function Get-PASourceOutput
 Export-ModuleMember -Function Set-PAInputSink
+Export-ModuleMember -Function Set-DefaultPASink
