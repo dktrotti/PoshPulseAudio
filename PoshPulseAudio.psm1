@@ -23,6 +23,16 @@ function New-PulseAudioProfile {
     }
 }
 
+<#
+    .SYNOPSIS
+    Gets all Pulse Audio cards. (See `pactl list cards` for details)
+
+    .PARAMETER Name
+    The name of the desired cards, or a pattern to match the name against.
+
+    .OUTPUTS
+    A list of PulseAudioCards matching the provided pattern, or all cards if no name was specified.
+#>
 function Get-PACard {
     [CmdletBinding()]
     param (
@@ -47,6 +57,22 @@ function Get-PACard {
         Where-Object { -not $Name -or $_.Name -like $Name }
 }
 
+<#
+    .SYNOPSIS
+    Sets the active profile of the specified Pulse Audio card. (See `pactl set-card-profile` for details)
+
+    .PARAMETER PACard
+    The PulseAudioCard to be updated, or the name of the card.
+
+    .PARAMETER PAProfile
+    The PulseAudioProfile to be used, or the name of the profile.
+
+    .INPUTS
+    See parameter PACard.
+
+    .OUTPUTS
+    None
+#>
 function Set-PACardProfile {
     [CmdletBinding()]
     param (
@@ -77,6 +103,16 @@ function Set-PACardProfile {
     }
 }
 
+<#
+    .SYNOPSIS
+    Gets all Pulse Audio output devices. (See `pactl list sinks` for details)
+
+    .PARAMETER Name
+    The name of the desired sink, or a pattern to match the name against.
+
+    .OUTPUTS
+    A list of PulseAudioSinks matching the provided pattern, or all sinks if no name was specified.
+#>
 function Get-PASink {
     [CmdletBinding()]
     param (
@@ -97,6 +133,13 @@ function Get-PASink {
         Where-Object { -not $Name -or $_.Name -like $Name }
 }
 
+<#
+    .SYNOPSIS
+    Gets all applications outputting audio to Pulse Audio output devices. (See `pactl list sink-inputs` for details)
+
+    .OUTPUTS
+    A list of PulseAudioSinkInputs.
+#>
 function Get-PASinkInput {
     pactl list sink-inputs |
         Split-IndentedData |
@@ -110,6 +153,16 @@ function Get-PASinkInput {
         }
 }
 
+<#
+    .SYNOPSIS
+    Gets all Pulse Audio input devices. (See `pactl list sources` for details)
+
+    .PARAMETER Name
+    The name of the desired source, or a pattern to match the name against.
+
+    .OUTPUTS
+    A list of PulseAudioSources matching the provided pattern, or all sources if no name was specified.
+#>
 function Get-PASource {
     [CmdletBinding()]
     param (
@@ -130,6 +183,14 @@ function Get-PASource {
         Where-Object { -not $Name -or $_.Name -like $Name }
 }
 
+
+<#
+    .SYNOPSIS
+    Gets all applications receiving audio from Pulse Audio input devices. (See `pactl list source-outputs` for details)
+
+    .OUTPUTS
+    A list of PulseAudioSourceOutputs.
+#>
 function Get-PASourceOutput {
     pactl list source-outputs |
         Split-IndentedData |
@@ -143,6 +204,22 @@ function Get-PASourceOutput {
         }
 }
 
+<#
+    .SYNOPSIS
+    Sets the Pulse Audio sink being used by the specified application. (See `pactl move-sink-input` for details)
+
+    .PARAMETER PASink
+    The PulseAudioSink to be used, or the name of the sink.
+
+    .PARAMETER PAInput
+    The PulseAudioSinkInput to be moved, or the index of the sink input.
+
+    .INPUTS
+    See parameter PAInput.
+
+    .OUTPUTS
+    None
+#>
 function Set-PAInputSink {
     [CmdletBinding()]
     param (
@@ -173,6 +250,19 @@ function Set-PAInputSink {
     }
 }
 
+<#
+    .SYNOPSIS
+    Sets the default Pulse Audio sink that will be used when an application starts. (See `pactl set-default-sink` for details)
+
+    .PARAMETER PASink
+    The PulseAudioSink to be used, or the name of the sink.
+
+    .INPUTS
+    See parameter PASink.
+
+    .OUTPUTS
+    None
+#>
 function Set-DefaultPASink {
     [CmdletBinding()]
     param (
