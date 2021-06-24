@@ -265,7 +265,6 @@ function Set-PAInputSink {
 #>
 function Set-DefaultPASink {
     [CmdletBinding()]
-    err
     param (
         [Parameter(Mandatory, ValueFromPipeline)]
         [object]
