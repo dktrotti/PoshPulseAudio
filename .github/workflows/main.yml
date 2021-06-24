@@ -37,8 +37,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Publish Module to PowerShell Gallery
-        uses: pcgeek86/publish-powershell-module-action@v19
-        id: publish-module
-        with:
-          modulePath: PoshPulseAudio
-          NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
+        run: |
+          Publish-Module -Path . -NuGetApiKey {{ secrets.PS_GALLERY_KEY }} --skip-duplicate
