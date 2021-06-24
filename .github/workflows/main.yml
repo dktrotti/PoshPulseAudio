@@ -38,4 +38,12 @@ jobs:
       - uses: actions/checkout@v2
       - name: Publish Module to PowerShell Gallery
         run: |
-          Publish-Module -Path . -NuGetApiKey {{ secrets.PS_GALLERY_KEY }} --skip-duplicate
+          try {
+            Publish-Module -Path . -NuGetApiKey {{ secrets.PS_GALLERY_KEY }} -ErrorAction Stop
+          } catch {
+            if ($_.Exception.Message -ilike "current version * is already available") {
+              Write-Output "Module already published"
+            } else {
+              Write-Error $_
+            }
+          }
