@@ -1,7 +1,6 @@
 on:
   push:
-    paths:
-      - 'main'
+    branches: [ main ]
 jobs:
   pester-test:
     runs-on: 'ubuntu-latest'
