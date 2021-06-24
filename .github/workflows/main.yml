@@ -1,13 +1,15 @@
 on:
   push:
     branches: [ main ]
+defaults:
+  run:
+    shell: pwsh
 jobs:
   pester-test:
     runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v2
       - name: 'Run Pester Tests'
-        shell: pwsh
         run: |
           function pactl {}
           Invoke-Pester ./PoshPulseAudio.Test.ps1
@@ -16,12 +18,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: 'Install PSScriptAnalyzer'
-        shell: pwsh
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module PSScriptAnalyzer -ErrorAction Stop
       - name: 'Run PSScriptAnalyzer'
-        shell: pwsh
         run: |
           Invoke-ScriptAnalyzer -Path *.ps1 -Recurse -Outvariable issues
           $errors = $issues.Where({$_.Severity -eq 'Error'})
@@ -36,8 +36,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - shell: pwsh
-        run: cd ..
       - name: Publish Module to PowerShell Gallery
         uses: pcgeek86/publish-powershell-module-action@v19
         id: publish-module
