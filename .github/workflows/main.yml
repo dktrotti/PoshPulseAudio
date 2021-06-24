@@ -31,3 +31,14 @@ jobs:
           } else {
               Write-Output "There were $($errors.Count) errors and $($warnings.Count) warnings total."
           }
+  publish-module:
+    needs: [pester-test, run-linter]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish Module to PowerShell Gallery
+        uses: pcgeek86/publish-powershell-module-action@v19
+        id: publish-module
+        with:
+          modulePath: PoshPulseAudio
+          NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
