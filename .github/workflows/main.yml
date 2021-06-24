@@ -12,7 +12,7 @@ jobs:
       - name: 'Run Pester Tests'
         run: |
           function pactl {}
-          Invoke-Pester ./PoshPulseAudio/PoshPulseAudio.Test.ps1
+          Invoke-Pester ./PoshPulseAudio.Test.ps1
   run-linter:
     runs-on: ubuntu-latest
     steps:
