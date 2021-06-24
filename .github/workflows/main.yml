@@ -6,7 +6,8 @@ jobs:
     runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v2
-      - shell: pwsh
+      - name: 'Run Pester Tests'
+        shell: pwsh
         run: |
           function pactl {}
           Invoke-Pester ./PoshPulseAudio.Test.ps1
@@ -14,11 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - shell: pwsh
+      - name: 'Install PSScriptAnalyzer'
+        shell: pwsh
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module PSScriptAnalyzer -ErrorAction Stop
-      - shell: pwsh
+      - name: 'Run PSScriptAnalyzer'
+        shell: pwsh
         run: |
           Invoke-ScriptAnalyzer -Path *.ps1 -Recurse -Outvariable issues
           $errors = $issues.Where({$_.Severity -eq 'Error'})
