@@ -7,7 +7,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - shell: pwsh
-        run: Invoke-Pester ./PoshPulseAudio.Test.ps1
+        run: |
+          function pactl {}
+          Invoke-Pester ./PoshPulseAudio.Test.ps1
   run-linter:
     runs-on: ubuntu-latest
     steps:
