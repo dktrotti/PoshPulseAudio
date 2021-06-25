@@ -9,10 +9,10 @@
 @{
 
 # Script module or binary module file associated with this manifest.
-RootModule = 'PoshPulseAudio'
+RootModule = 'PoshPulseAudio.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.2'
+ModuleVersion = '1.0.3'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -69,10 +69,7 @@ Description = 'Provides a powershell wrapper around pulse audio.'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @()
-
-# Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = @(
+FunctionsToExport = @(
     "Get-PACard",
     "Set-PACardProfile",
     "Get-PASink",
@@ -82,6 +79,9 @@ CmdletsToExport = @(
     "Set-PAInputSink",
     "Set-DefaultPASink"
 )
+
+# Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
+CmdletsToExport = @()
 
 # Variables to export from this module
 VariablesToExport = '*'
