@@ -23,6 +23,30 @@ function New-PulseAudioProfile {
     }
 }
 
+function New-PulseAudioPort {
+    [CmdletBinding()]
+    param (
+        [Parameter()]
+        [IndentedDataItem]
+        $portData
+    )
+    $pattern = "^(?<name>.*): (?<displayName>.*) \(.*, (?<available>.*)\)"
+    if ($portData.Value -match $pattern) {
+        $properties = $portData.FindChild("^Properties:.*")
+        $productName = ($null -eq $properties) ? $null : $properties.ParseChildValue("device.product.name = ")
+        $profileNames = $portData.ParseChildValue("Part of profile\(s\): ")
+        return [PulseAudioPort] @{
+            SymbolicName = $Matches.name
+            DisplayName = $Matches.displayName
+            ProductName = ($null -eq $productName) ? $null : $productName.Trim('"')
+            Available = $Matches.available -ne "not available"
+            ProfileNames = $profileNames -split ", "
+        }
+    } else {
+        Write-Warning "Unexpected port data format: $($portData.Value)"
+    }
+}
+
 <#
     .SYNOPSIS
     Gets all Pulse Audio cards. (See `pactl list cards` for details)
@@ -41,16 +65,19 @@ function Get-PACard {
         $Name
     )
     pactl list cards |
+        Remove-InvalidNewlines |
         Split-IndentedData |
         ForEach-Object {
             $profiles = $_.FindChild("^Profiles:.*").Children | ForEach-Object { New-PulseAudioProfile $_.Value }
             $activeProfileName = $_.ParseChildValue("Active Profile: ")
+            $ports = $_.FindChild("^Ports:.*").Children | ForEach-Object { New-PulseAudioPort $_ }
             [PulseAudioCard] @{
                 Index = $_.ParseValue("Card #")
                 Name = $_.ParseChildValue("Name: ")
                 Driver = $_.ParseChildValue("Driver: ")
                 Profiles = $profiles
                 ActiveProfile = $profiles | Where-Object { $_.SymbolicName -eq $activeProfileName } | Select-Object -First 1
+                Ports = $ports
             }
         } |
         # Do not filter on $Name if it is not set

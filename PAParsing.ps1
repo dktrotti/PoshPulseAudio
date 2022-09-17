@@ -63,3 +63,41 @@ function Split-IndentedData {
         }
     }
 }
+
+function Remove-InvalidNewlines {
+    <#
+    .DESCRIPTION
+    Removes newlines that are not part of the output formatting, but are instead part of a value.
+    .NOTES
+    Invalid newlines are detected by checking for lines that begin with spaces instead of tabs. This
+    is not a particularly robust mechanism, but this is the only invalid case that has been found so
+    far.
+    #>
+    [CmdletBinding()]
+    param (
+        [Parameter(ValueFromPipeline=$true)]
+        [string]
+        $currentLine
+    )
+    begin {
+        $lastLine = $null
+    }
+    process {
+        if ($null -eq $lastLine) {
+            $lastLine = $currentLine
+        } elseif ($currentLine -match '^ +(.*)') {
+            # output the last line with this line appended
+            $lastLine + $matches.1
+            $lastLine = $null
+        } else {
+            # output the last line
+            $lastLine
+            
+            $lastLine = $currentLine
+        }
+    }
+    end {
+        # output the last line
+        $lastLine
+    }
+}

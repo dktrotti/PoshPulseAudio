@@ -112,21 +112,21 @@ Describe 'Get-PACard' {
         $card.Ports.Count | Should -Be 7
 
         $card.Ports[0].SymbolicName | Should -Be "hdmi-output-0"
-        $card.Ports[0].DisplayName | Should -Be "DisplayPort"
+        $card.Ports[0].DisplayName | Should -Be "HDMI / DisplayPort"
         $card.Ports[0].ProductName | Should -Be "ASUS MG278"
         $card.Ports[0].Available | Should -BeTrue
         $card.Ports[0].ProfileNames | Should -Be @("output:hdmi-stereo", "output:hdmi-surround", "output:hdmi-surround71")
 
         $card.Ports[1].SymbolicName | Should -Be "hdmi-output-1"
-        $card.Ports[1].DisplayName | Should -Be "DisplayPort 2"
-        $card.Ports[1].ProductName | Should -Be $null
-        $card.Ports[1].Available | Should -BeTrue
+        $card.Ports[1].DisplayName | Should -Be "HDMI / DisplayPort 2"
+        $card.Ports[1].ProductName | Should -BeNullOrEmpty
+        $card.Ports[1].Available | Should -BeFalse
         $card.Ports[1].ProfileNames | Should -Be @("output:hdmi-stereo-extra1", "output:hdmi-surround-extra1", "output:hdmi-surround71-extra1")
 
         $card.Ports[6].SymbolicName | Should -Be "hdmi-output-6"
-        $card.Ports[6].DisplayName | Should -Be "DisplayPort 7"
-        $card.Ports[6].ProductName | Should -Be $null
-        $card.Ports[6].Available | Should -BeTrue
+        $card.Ports[6].DisplayName | Should -Be "HDMI / DisplayPort 7"
+        $card.Ports[6].ProductName | Should -BeNullOrEmpty
+        $card.Ports[6].Available | Should -BeFalse
         $card.Ports[6].ProfileNames | Should -Be @("output:hdmi-stereo-extra6", "output:hdmi-surround-extra6", "output:hdmi-surround71-extra6")
     }
 

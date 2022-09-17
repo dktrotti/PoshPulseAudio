@@ -2,6 +2,7 @@ class PulseAudioCard {
     [int] $Index
     [string] $Name
     [string] $Driver
+    [PulseAudioPort[]] $Ports
     [PulseAudioProfile[]] $Profiles
     [PulseAudioProfile] $ActiveProfile
 
