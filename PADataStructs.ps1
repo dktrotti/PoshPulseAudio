@@ -23,6 +23,18 @@ class PulseAudioProfile {
     }
 }
 
+class PulseAudioPort {
+    [string] $SymbolicName
+    [string] $DisplayName
+    [string] $ProductName
+    [bool] $Available
+    [string[]] $ProfileNames
+
+    [string] ToString() {
+        return ConvertTo-Json $this
+    }
+}
+
 class PulseAudioSink {
     [int] $Index
     [string] $Name
